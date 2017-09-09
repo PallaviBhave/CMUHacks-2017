@@ -14,6 +14,11 @@
       {
         text-align: center;
       }
+      .button
+      {
+        background-color: blue;
+        color: yellow;
+      }
     </style>
 
 
@@ -21,19 +26,23 @@
       <h1 class = "title"> Let's Nacho </h1>
       <p class = "intro"> Want to create a combined playlist with your friends for a party? Do it here!</p>
     </div>
+  <script> 
+    var songID = "AXOPSJH3yRY"; 
+  </script>
 
     <div class = "form_for_song">
-      <form>
-        Find your song:
-        <input type = "text" placeholder = "You Belong with Me">
+      <form id = "youtube">
+        Find your song ID:
+        <input type = "text" placeholder = "Ex: AXOPSJH3yRY" id = "youtubeID">
+        <button id = "button" onclick = "return onYouTubeIframeAPIReady()"> Submit </button>
         <br>
       </form>
-      <script> var array = $('form').serializeArray() //this produces: "foo=1&bar=xxx&this=hi" </script>
       <br>
   </head>
 
 
   <body>
+    <script src="https://apis.google.com/js/client.js?onload=function"></script>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <div id="player"></div>
 
@@ -48,16 +57,21 @@
       // 3. This function creates an <iframe> (and YouTube player)
       //    after the API code downloads.
       var player;
-      function onYouTubeIframeAPIReady() {
+      songID = document.getElementById("youtubeID").value;
+      console.log(songID);
+
+      function onYouTubeIframeAPIReady() 
+      {
         player = new YT.Player('player', {
           height: '390',
           width: '640',
-          videoId: 'tONER1SfZDQ',
+          videoId: songID,
           events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
           }
-        });
+        })
+        return false;
       }
 
       // 4. The API will call this function when the video player is ready.
